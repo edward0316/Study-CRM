@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="crm@192.168.0.11" uuid="5f8c14a1-2479-4248-93dc-dd90bf978b76">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://192.168.0.11:3306/crm?serverTimezone=Hongkong</jdbc-url>
+    </data-source>
+  </component>
+</project>

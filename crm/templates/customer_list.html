@@ -1,0 +1,87 @@
+{% extends 'layout.html' %}
+{% load my_tags %}
+{% block content %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ title }}</h3>
+        </div>
+        <div class="panel-body">
+            <div>
+                <a href="{% url 'crm:add_customer' %}" class="btn btn-primary">新增</a>
+            </div>
+            <form action="" class="form-inline pull-right">
+                <input type="text" name="query" class="form-control">
+                <button class="btn btn-sm btn-success">Search</button>
+            </form>
+
+            <form action="" class="form-inline" method="post">
+                {% csrf_token %}
+                <select name="action" id="" class="form-control">
+                    {% if request.path_info == '/crm/customer_list/' %}
+                        <option value="multi_prv">公户转私户</option>
+                    {% else %}
+                        <option value="multi_pub">私户转公户</option>
+                        <option value="multi_del">批量删除</option>
+                    {% endif %}
+
+                </select>
+
+                <button class="btn btn-sm btn-primary">应用</button>
+
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>选择</th>
+                        <th>序号</th>
+                        <th>ID</th>
+                        <th>QQ</th>
+                        <th>姓名</th>
+                        <th>性别</th>
+                        <th>手机号</th>
+                        <th>客户来源</th>
+                        <th>咨询课程</th>
+                        <th>班级类型</th>
+                        <th>状态</th>
+                        <th>下次跟进时间</th>
+                        <th>销售</th>
+                        <th>已报班级</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for customer in all_customer %}
+                        <tr>
+                            <td><input type="checkbox" name="pk" value="{{ customer.pk }}"></td>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ customer.pk }}</td>
+                            <td>{{ customer.qq }}</td>
+                            <td>{{ customer.name }}</td>
+                            <td>{{ customer.sex }}</td>
+                            <td>{{ customer.phone }}</td>
+                            <td>{{ customer.get_source_display }}</td>
+                            <td>{{ customer.course }}</td>
+                            <td>{{ customer.get_class_type_display }}</td>
+                            <td>{{ customer.show_status }}</td>
+                            <td>{{ customer.next_date }}</td>
+                            <td>{{ customer.consultant }}</td>
+                            <td>{{ customer.show_class }}</td>
+{#                            <td><a href="{% url "crm:edit_customer" customer.pk %}" class="btn btn-primary btn-sm">编辑</a>#}
+                            <td><a href="{% reverse_url request 'crm:edit_customer' customer.pk %}" class="btn btn-primary btn-sm">编辑</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+
+            </form>
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    {{ page_html|safe }}
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+{% endblock %}
